@@ -5,10 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { commonStyles, colors } from '../styles/commonStyles';
 import { useRouter } from 'expo-router';
 import Icon from '../components/Icon';
-import Logo from '../components/Logo';
 import Button from '../components/Button';
-
-const { width } = Dimensions.get('window');
+import Logo from '../components/Logo';
 
 interface OnboardingSlide {
   id: number;
@@ -18,33 +16,40 @@ interface OnboardingSlide {
   icon: string;
 }
 
+const slides: OnboardingSlide[] = [
+  {
+    id: 1,
+    title: 'Join Khedmah Delivery',
+    description: 'Register your restaurant or cafe with our trusted delivery platform and reach more customers.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop',
+    icon: 'restaurant-outline',
+  },
+  {
+    id: 2,
+    title: 'Easy Registration',
+    description: 'Simple step-by-step process to get your business registered and verified quickly.',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop',
+    icon: 'document-text-outline',
+  },
+  {
+    id: 3,
+    title: 'Track Your Progress',
+    description: 'Monitor your application status and get real-time updates on your registration process.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
+    icon: 'analytics-outline',
+  },
+  {
+    id: 4,
+    title: 'Grow Your Business',
+    description: 'Start receiving orders and grow your business with our comprehensive delivery platform.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop',
+    icon: 'trending-up-outline',
+  },
+];
+
 export default function OnboardingScreen() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides: OnboardingSlide[] = [
-    {
-      id: 1,
-      title: 'Join Our Platform',
-      description: 'Register your restaurant or cafe with Khedmah Delivery and reach thousands of customers',
-      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop',
-      icon: 'restaurant-outline',
-    },
-    {
-      id: 2,
-      title: 'Easy Registration',
-      description: 'Simple 3-step process to get your business listed on our platform',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop',
-      icon: 'document-text-outline',
-    },
-    {
-      id: 3,
-      title: 'Track Progress',
-      description: 'Monitor your application status and get real-time updates on your registration',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
-      icon: 'analytics-outline',
-    },
-  ];
 
   const handleNext = () => {
     if (currentSlide < slides.length - 1) {
@@ -59,37 +64,18 @@ export default function OnboardingScreen() {
   };
 
   const renderSlide = (slide: OnboardingSlide) => (
-    <View style={{ width, alignItems: 'center', paddingHorizontal: 20 }}>
-      {/* Show logo on first slide */}
-      {slide.id === 1 && (
-        <Logo size="medium" showText={true} style={{ marginBottom: 24 }} />
-      )}
-      
-      {/* Show icon for other slides */}
-      {slide.id !== 1 && (
-        <View style={{
-          backgroundColor: colors.primary,
-          borderRadius: 40,
-          width: 80,
-          height: 80,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 32,
-        }}>
-          <Icon name={slide.icon as any} size={40} color={colors.background} />
-        </View>
-      )}
-      
-      <Image
-        source={{ uri: slide.image }}
-        style={{
-          width: width * 0.8,
-          height: 200,
-          borderRadius: 12,
-          marginBottom: 32,
-        }}
-        resizeMode="cover"
-      />
+    <View style={{ width: Dimensions.get('window').width, alignItems: 'center', paddingHorizontal: 20 }}>
+      <View style={{
+        backgroundColor: `${colors.primary}15`,
+        borderRadius: 100,
+        width: 200,
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 40,
+      }}>
+        <Icon name={slide.icon as any} size={80} color={colors.primary} />
+      </View>
       
       <Text style={[commonStyles.title, { textAlign: 'center', marginBottom: 16 }]}>
         {slide.title}
@@ -102,15 +88,15 @@ export default function OnboardingScreen() {
   );
 
   const renderPagination = () => (
-    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 32 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 30 }}>
       {slides.map((_, index) => (
         <View
           key={index}
           style={{
-            width: 8,
+            width: currentSlide === index ? 24 : 8,
             height: 8,
             borderRadius: 4,
-            backgroundColor: index === currentSlide ? colors.primary : colors.border,
+            backgroundColor: currentSlide === index ? colors.primary : colors.grey,
             marginHorizontal: 4,
           }}
         />
@@ -121,10 +107,20 @@ export default function OnboardingScreen() {
   return (
     <SafeAreaView style={commonStyles.container}>
       <View style={commonStyles.content}>
-        {/* Skip Button */}
-        <View style={{ alignItems: 'flex-end', paddingHorizontal: 20, paddingTop: 20 }}>
-          <TouchableOpacity onPress={handleSkip}>
-            <Text style={[commonStyles.textSecondary, { fontSize: 16 }]}>Skip</Text>
+        {/* Header */}
+        <View style={[commonStyles.section, { paddingTop: 20, alignItems: 'center' }]}>
+          <Logo size="medium" showText={false} variant="full" />
+          <TouchableOpacity
+            onPress={handleSkip}
+            style={{
+              position: 'absolute',
+              right: 20,
+              top: 20,
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+            }}
+          >
+            <Text style={[commonStyles.text, { color: colors.textSecondary }]}>Skip</Text>
           </TouchableOpacity>
         </View>
 
@@ -134,13 +130,13 @@ export default function OnboardingScreen() {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={(event) => {
-            const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
+            const slideIndex = Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width);
             setCurrentSlide(slideIndex);
           }}
           style={{ flex: 1 }}
         >
           {slides.map((slide) => (
-            <View key={slide.id} style={{ justifyContent: 'center', flex: 1 }}>
+            <View key={slide.id} style={{ flex: 1, justifyContent: 'center' }}>
               {renderSlide(slide)}
             </View>
           ))}
@@ -149,8 +145,8 @@ export default function OnboardingScreen() {
         {/* Pagination */}
         {renderPagination()}
 
-        {/* Navigation Button */}
-        <View style={[commonStyles.section, { paddingBottom: 20 }]}>
+        {/* Navigation */}
+        <View style={[commonStyles.section, { paddingBottom: 40 }]}>
           <Button
             text={currentSlide === slides.length - 1 ? 'Get Started' : 'Next'}
             onPress={handleNext}

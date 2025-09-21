@@ -1,19 +1,28 @@
+
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const colors = {
-  primary: '#FF6B35',    // Orange - delivery/food theme
-  secondary: '#FF8C42',  // Light Orange
-  accent: '#4ECDC4',     // Teal accent
+  primary: '#8B5CF6',    // Purple - primary brand color
+  secondary: '#10B981',  // Green - secondary brand color  
+  accent: '#FFFFFF',     // White - third color
   background: '#FFFFFF', // White background for light theme
   backgroundAlt: '#F8F9FA', // Light grey background
   text: '#2C3E50',       // Dark text for readability
   textSecondary: '#7F8C8D', // Secondary text color
   grey: '#BDC3C7',       // Light grey
   card: '#FFFFFF',       // White card background
-  success: '#27AE60',    // Green for success states
-  warning: '#F39C12',    // Orange for warnings
-  error: '#E74C3C',      // Red for errors
+  success: '#10B981',    // Green for success states (using secondary color)
+  warning: '#F59E0B',    // Orange for warnings
+  error: '#EF4444',      // Red for errors
   border: '#E1E8ED',     // Light border color
+  
+  // Dark theme colors (for future dark mode implementation)
+  darkBackground: '#1F2937',
+  darkBackgroundAlt: '#374151',
+  darkText: '#F9FAFB',
+  darkTextSecondary: '#D1D5DB',
+  darkCard: '#374151',
+  darkBorder: '#4B5563',
 };
 
 export const buttonStyles = StyleSheet.create({
@@ -105,7 +114,7 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: colors.background,
+    color: colors.accent,
     fontSize: 16,
     fontWeight: '600',
   },

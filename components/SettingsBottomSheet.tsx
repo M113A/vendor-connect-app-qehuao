@@ -16,12 +16,12 @@ export default function SettingsBottomSheet({ isVisible, onClose }: SettingsBott
 
   const settingsOptions = [
     {
-      icon: 'color-palette-outline',
-      title: 'Logo & Branding',
-      description: 'Upload your logo and customize colors',
+      icon: 'settings-outline',
+      title: 'App Settings',
+      description: 'Language, theme, and preferences',
       action: () => {
         onClose();
-        router.push('/logo-settings');
+        router.push('/app-settings');
       },
     },
     {
@@ -51,7 +51,7 @@ export default function SettingsBottomSheet({ isVisible, onClose }: SettingsBott
     },
     {
       icon: 'information-circle-outline',
-      title: 'About',
+      title: 'Platform Info',
       description: 'Learn more about Khedmah Delivery',
       action: () => {
         onClose();

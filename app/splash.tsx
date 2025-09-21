@@ -1,45 +1,87 @@
 
 import React, { useEffect } from 'react';
-import { View, Text, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { commonStyles, colors } from '../styles/commonStyles';
 import { useRouter } from 'expo-router';
+import Logo from '../components/Logo';
 
 export default function SplashScreen() {
   const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/');
-    }, 2000);
+      router.replace('/onboarding');
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [router]);
 
   return (
-    <SafeAreaView style={[commonStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-      <View style={{ alignItems: 'center' }}>
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=200&h=200&fit=crop&crop=center' }}
-          style={{
-            width: 120,
-            height: 120,
-            borderRadius: 60,
-            marginBottom: 32,
-          }}
-          resizeMode="cover"
-        />
-        
-        <Text style={[commonStyles.title, { marginBottom: 8 }]}>
-          Khedmah Delivery
+    <SafeAreaView style={[commonStyles.container, styles.container]}>
+      <View style={styles.content}>
+        <Logo size="large" showText={false} variant="full" />
+        <Text style={styles.tagline}>
+          Delivering Excellence
         </Text>
-        
-        <Text style={[commonStyles.textSecondary, { textAlign: 'center', marginBottom: 48 }]}>
-          Partner Registration Platform
+        <View style={styles.loadingContainer}>
+          <View style={styles.loadingBar}>
+            <View style={styles.loadingProgress} />
+          </View>
+        </View>
+      </View>
+      
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Powered by Khedmah Delivery Platform
         </Text>
-        
-        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 40,
+  },
+  tagline: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  loadingContainer: {
+    marginTop: 60,
+    width: 200,
+  },
+  loadingBar: {
+    height: 4,
+    backgroundColor: colors.backgroundAlt,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  loadingProgress: {
+    height: '100%',
+    width: '70%',
+    backgroundColor: colors.primary,
+    borderRadius: 2,
+  },
+  footer: {
+    paddingBottom: 40,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+});

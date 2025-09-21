@@ -39,4 +39,7 @@ export const STORAGE_KEYS = {
   REGISTRATION_DRAFT: 'registration_draft',
   USER_PREFERENCES: 'user_preferences',
   TRACKING_HISTORY: 'tracking_history',
+  APP_SETTINGS: 'app_settings',
+  THEME_SETTINGS: 'theme_settings',
+  LANGUAGE_SETTINGS: 'language_settings',
 };
