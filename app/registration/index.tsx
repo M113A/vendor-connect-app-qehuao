@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { commonStyles, colors } from '../../styles/commonStyles';
@@ -37,6 +37,14 @@ export default function RegistrationScreen() {
 
   const totalSteps = 3;
 
+  const saveDraft = useCallback(async () => {
+    try {
+      await storage.setItem(STORAGE_KEYS.REGISTRATION_DRAFT, JSON.stringify(formData));
+    } catch (error) {
+      console.log('Error saving draft:', error);
+    }
+  }, [formData]);
+
   // Load saved draft on component mount
   useEffect(() => {
     loadDraft();
@@ -45,7 +53,7 @@ export default function RegistrationScreen() {
   // Save draft whenever form data changes
   useEffect(() => {
     saveDraft();
-  }, [formData]);
+  }, [formData, saveDraft]);
 
   const loadDraft = async () => {
     try {
@@ -57,14 +65,6 @@ export default function RegistrationScreen() {
       }
     } catch (error) {
       console.log('Error loading draft:', error);
-    }
-  };
-
-  const saveDraft = async () => {
-    try {
-      await storage.setItem(STORAGE_KEYS.REGISTRATION_DRAFT, JSON.stringify(formData));
-    } catch (error) {
-      console.log('Error saving draft:', error);
     }
   };
 
