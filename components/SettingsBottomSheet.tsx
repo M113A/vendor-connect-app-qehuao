@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { commonStyles, colors } from '../styles/commonStyles';
+import { useRouter } from 'expo-router';
 import Icon from './Icon';
 import SimpleBottomSheet from './BottomSheet';
 
@@ -11,38 +12,50 @@ interface SettingsBottomSheetProps {
 }
 
 export default function SettingsBottomSheet({ isVisible, onClose }: SettingsBottomSheetProps) {
+  const router = useRouter();
+
   const settingsOptions = [
     {
-      icon: 'help-circle-outline',
-      title: 'Help & Support',
-      subtitle: 'Get help with your registration',
+      icon: 'color-palette-outline',
+      title: 'Logo & Branding',
+      description: 'Upload your logo and customize colors',
       action: () => {
         onClose();
-        // Navigate to contact screen
+        router.push('/logo-settings');
       },
     },
     {
-      icon: 'document-text-outline',
-      title: 'Terms & Conditions',
-      subtitle: 'Read our terms of service',
+      icon: 'call-outline',
+      title: 'Contact Support',
+      description: 'Get help from our team',
       action: () => {
-        Linking.openURL('https://khedmahdelivery.com/terms');
+        onClose();
+        router.push('/contact');
       },
     },
     {
-      icon: 'shield-checkmark-outline',
-      title: 'Privacy Policy',
-      subtitle: 'How we protect your data',
+      icon: 'mail-outline',
+      title: 'Email Us',
+      description: 'mubasher.tariq@khedmahdelivery.com',
       action: () => {
-        Linking.openURL('https://khedmahdelivery.com/privacy');
+        Linking.openURL('mailto:mubasher.tariq@khedmahdelivery.com');
+      },
+    },
+    {
+      icon: 'call-outline',
+      title: 'Call Us',
+      description: '+96893207302',
+      action: () => {
+        Linking.openURL('tel:+96893207302');
       },
     },
     {
       icon: 'information-circle-outline',
       title: 'About',
-      subtitle: 'Learn more about Khedmah Delivery',
+      description: 'Learn more about Khedmah Delivery',
       action: () => {
-        // Show about info
+        onClose();
+        router.push('/platform-info');
       },
     },
   ];
@@ -50,49 +63,51 @@ export default function SettingsBottomSheet({ isVisible, onClose }: SettingsBott
   return (
     <SimpleBottomSheet isVisible={isVisible} onClose={onClose}>
       <View style={{ padding: 20 }}>
-        <Text style={[commonStyles.title, { marginBottom: 20 }]}>Settings</Text>
-        
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 24 }}>
+          <Text style={[commonStyles.title, { flex: 1 }]}>Settings</Text>
+          <TouchableOpacity onPress={onClose}>
+            <Icon name="close-outline" size={24} color={colors.text} />
+          </TouchableOpacity>
+        </View>
+
         <ScrollView showsVerticalScrollIndicator={false}>
           {settingsOptions.map((option, index) => (
             <TouchableOpacity
               key={index}
-              style={[commonStyles.card, { 
-                flexDirection: 'row', 
-                alignItems: 'center',
-                marginBottom: 12,
-                backgroundColor: colors.backgroundAlt,
-              }]}
+              style={[
+                commonStyles.card,
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 12,
+                  paddingVertical: 16,
+                },
+              ]}
               onPress={option.action}
             >
               <View style={{
-                backgroundColor: colors.primary,
-                borderRadius: 20,
-                width: 40,
-                height: 40,
+                backgroundColor: colors.backgroundAlt,
+                borderRadius: 25,
+                width: 50,
+                height: 50,
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginRight: 16,
               }}>
-                <Icon name={option.icon as any} size={20} color={colors.background} />
+                <Icon name={option.icon as any} size={24} color={colors.primary} />
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={[commonStyles.text, { fontWeight: '600', marginBottom: 2 }]}>
+                <Text style={[commonStyles.subtitle, { marginBottom: 4, fontSize: 16 }]}>
                   {option.title}
                 </Text>
-                <Text style={[commonStyles.textSecondary, { fontSize: 12 }]}>
-                  {option.subtitle}
-                </Text>
+                <Text style={commonStyles.textSecondary}>{option.description}</Text>
               </View>
-              <Icon name="chevron-forward-outline" size={16} color={colors.textSecondary} />
+              <Icon name="chevron-forward-outline" size={20} color={colors.textSecondary} />
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        <View style={{ marginTop: 20, alignItems: 'center' }}>
-          <Text style={[commonStyles.textSecondary, { fontSize: 12 }]}>
-            Khedmah Delivery Partner App v1.0.0
-          </Text>
-        </View>
+        <View style={{ height: 20 }} />
       </View>
     </SimpleBottomSheet>
   );

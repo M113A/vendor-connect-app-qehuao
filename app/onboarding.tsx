@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { commonStyles, colors } from '../styles/commonStyles';
 import { useRouter } from 'expo-router';
 import Icon from '../components/Icon';
+import Logo from '../components/Logo';
 import Button from '../components/Button';
 
 const { width } = Dimensions.get('window');
@@ -59,17 +60,25 @@ export default function OnboardingScreen() {
 
   const renderSlide = (slide: OnboardingSlide) => (
     <View style={{ width, alignItems: 'center', paddingHorizontal: 20 }}>
-      <View style={{
-        backgroundColor: colors.primary,
-        borderRadius: 40,
-        width: 80,
-        height: 80,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 32,
-      }}>
-        <Icon name={slide.icon as any} size={40} color={colors.background} />
-      </View>
+      {/* Show logo on first slide */}
+      {slide.id === 1 && (
+        <Logo size="medium" showText={true} style={{ marginBottom: 24 }} />
+      )}
+      
+      {/* Show icon for other slides */}
+      {slide.id !== 1 && (
+        <View style={{
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          width: 80,
+          height: 80,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 32,
+        }}>
+          <Icon name={slide.icon as any} size={40} color={colors.background} />
+        </View>
+      )}
       
       <Image
         source={{ uri: slide.image }}

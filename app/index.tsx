@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { commonStyles, colors } from '../styles/commonStyles';
 import { useRouter } from 'expo-router';
 import Icon from '../components/Icon';
+import Logo from '../components/Logo';
 import SettingsBottomSheet from '../components/SettingsBottomSheet';
 
 export default function HomeScreen() {
@@ -51,17 +52,7 @@ export default function HomeScreen() {
           </View>
           
           <View style={{ alignItems: 'center' }}>
-            <Image
-              source={{ uri: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=200&h=200&fit=crop&crop=center' }}
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: 40,
-                marginBottom: 20,
-              }}
-              resizeMode="cover"
-            />
-            <Text style={commonStyles.title}>Khedmah Delivery</Text>
+            <Logo size="large" showText={true} style={{ marginBottom: 16 }} />
             <Text style={[commonStyles.text, { textAlign: 'center', marginBottom: 32 }]}>
               Partner with us to grow your restaurant business
             </Text>
